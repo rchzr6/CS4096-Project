@@ -1,0 +1,9 @@
+<div id="frameone" style="border-style: solid; border-width: small; width=500px;">
+					<iframe id="frameone" src="../includes/frameone.php"></iframe>
+					</div>
+					<div id="frametwo" style="border-style: solid; border-width: small; width=500px;">
+				<iframe id="frametwo" src="../includes/frametwo.php"></iframe>
+				</div>
+					<div id="framethree" style="border-style: solid; border-width: small; width=500px;">
+						<iframe id="framethree" src="../includes/framethree.php"></iframe>
+					</div>

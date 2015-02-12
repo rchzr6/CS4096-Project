@@ -1,0 +1,26 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+<script type="text/javascript">
+function load_f1_f2_f3()
+{
+	// var url= "'..includes/frameone.php?wonum=" + wonum +"'";
+	// document.write(url);
+   // $('#frameone').load(url);
+   // $('#frametwo').load('../includes/frametwo.php);
+   // $('#framethree').load('../includes/framethree.php);
+   // document.getElementById(frameone).contentDocument.location.reload(true);
+   // document.getElementById(frametwo).contentDocument.location.reload(true);
+   // document.getElementById(framethree).contentDocument.location.reload(true);
+   document.getElementById('frameone').src = document.getElementById('frameone').src;
+   document.getElementById('frametwo').src = document.getElementById('frametwo').src;
+   document.getElementById('framethree').src = document.getElementById('framethree').src;
+
+// 'Modern' browsers (IE8+, use CSS-style selectors)
+// document.querySelector('#myResults').innerHTML = url;
+
+// Using the jQuery library
+// $('#myResults').html(url);
+
+// Legacy browser support
+// document.getElementById('myResults').innerHTML = url;
+}
+</script>

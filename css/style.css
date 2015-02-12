@@ -1,0 +1,21 @@
+html {
+	width: 100%;
+}
+
+li
+{
+ float:left;
+ padding-right: 20px;
+ text-decoration: underline;
+}
+
+#registertable{
+	width: 80%
+}
+#registertable tr{
+	width: 100%;
+	
+}
+#registertable td{
+	width: 50%;
+}
