@@ -44,7 +44,7 @@ $subject .= ' status changed';
 //message
 $message = '<html><p> <b> Work order number: <b>';
 $message .= $wonum;
-$message .= " has been upated.</b><br><br><b>Short Description</b><br><i>";
+$message .= " has been updated.</b><br><br><b>Short Description</b><br><i>";
 $message .= $wosdesc;
 $message .= "</i><br><br>";
 $message .= "<b>Latest Transaction</b>:<br><hr>";

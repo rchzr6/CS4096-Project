@@ -1,4 +1,4 @@
 <?php
 //basic redirect 
-		 header( 'Location: ../pages/stu_login.php' );
+		 header( 'Location: /pages/stu_login.php' );
 ?>

@@ -25,17 +25,17 @@
 			$mygroup = $_POST['groupfilter'];
 	}
 	
-	$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` where `assigned_name` = '$myname' AND `wo_status` != 'CLOSED'";
+	$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` where `assigned_name` = '$myname' AND `wo_status` != 'CLOSED'";
 	if(isset($_POST['me']))
-		$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` WHERE `assigned_name` = '$myname'";//gets work orders assigned to user
+		$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` WHERE `assigned_name` = '$myname'";//gets work orders assigned to user
 	else if(isset($_POST['group']))
-		$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date`FROM `work_orders` WHERE `assigned_group` = '$mygroup' ";//gets work orders assigned to user's group
+		$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date`FROM `work_orders` WHERE `assigned_group` = '$mygroup' ";//gets work orders assigned to user's group
 	else if(isset($_POST['mine']))
-	$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` WHERE  `submitter_name` = '$myname' OR `submitter_advisor` = '$myname'";//gets work orders that i am submitter or advisor
+		$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders` WHERE  `submitter_name` = '$myname' OR `submitter_advisor` = '$myname' OR `assigned_name` = '$myname'";//gets work orders that i am submitter or advisor
 	
 	//echo $q;
 if(isset($_POST['vall']))
-		$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders`";//gets all work orders
+		$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders`";//gets all work orders
 
 //echo $q;		
 			if(isset($_POST['vall'])){
@@ -60,7 +60,7 @@ if(isset($_POST['organize'])){
 		$q .= " ORDER BY `due_date` ASC";
 	else if($org == 'tree'){
 		$tree = TRUE;
-		$q = "SELECT `wo_num`,`wo_submit_date`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders`";//gets all work orders
+		$q = "SELECT `wo_num`,`wo_status`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders`";//gets all work orders
 	}
 }
 $wo_to_display = mysqli_query($con,$q);

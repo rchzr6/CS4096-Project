@@ -13,9 +13,11 @@
 			<option value="terminate">Terminate</option>
 			<option value="placeonhold">Place On Hold</option>
 			<option value="setstartdate">Set Start Date</option>
+			<option value="edit">Edit Work Order Info</option>
 		</select><br>
 		<input type="submit" value="Submit"  name="Submit"/>
 	</form>
+	
 </div>
 <?php
 
@@ -32,8 +34,8 @@
 			$date = date("Y-m-d H:i:s");
 			$q = "UPDATE `work_orders` SET `wo_status`= 'Closed',`wo_complete_date` = '$date' WHERE `wo_num` = '$wonum'";
 			mysqli_query($con,$q);
-			$comment = 'Closed by '.$aname;
-			$q = "INSERT INTO transaction(wo_num,wo_status,transaction_by,comments) VALUES('$wonum','CLOSED','$aname','$comment')";
+			$comment = 'Closed by '.$myname;
+			$q = "INSERT INTO transaction(wo_num,wo_status,transaction_by,comments) VALUES('$wonum','Closed','$myname','$comment')";
 			mysqli_query($con,$q);
 			include '../includes/emails/send_user_closed_wo.php';
 		}
@@ -48,13 +50,16 @@
 			$date = date("Y-m-d H:i:s");
 			$q = "UPDATE `work_orders` SET `wo_status`= 'Hold' WHERE `wo_num` = '$wonum'";
 			mysqli_query($con,$q);
-			echo '<script>window.open("../includes/review_assign_frames/get_comment.php?status=HOLD&wonum='.$wonum.'&name='.$aname.'")</script>';
+			echo '<script>window.open("../includes/review_assign_frames/get_comment.php?status=Hold&wonum='.$wonum.'&name='.$aname.'")</script>';
 		}
 		if($action == 'setstartdate'){
 			$date = date("Y-m-d H:i:s");
 			//$q = "UPDATE `work_orders` SET `wo_status`= 'Hold' WHERE `wo_num` = '$wonum'";
 			//mysqli_query($con,$q);
 			echo '<script>window.open("../includes/review_assign_frames/get_date.php?status='.$status.'&wonum='.$wonum.'&name='.$aname.'")</script>';
+		}
+		if($action == 'edit'){
+			echo '<script>window.open("../pages/change_info.php?status='.$status.'&wonum='.$wonum.'")</script>';
 		}
 	
 	}

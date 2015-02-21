@@ -2,7 +2,7 @@
 	$id = $_SESSION['UID'];
 	$q = "SELECT `name` FROM `faculty` WHERE `id_num` = '$id'";
 	$res = mysqli_query($con,$q);
-	$resa = $row = $res->fetch_assoc();;
+	$resa = $row = $res->fetch_row();
 	$namear = $resa[0];
 	$q = "SELECT COUNT(group_name) FROM `group` WHERE `user_name` = '$namear'";
 	$res = mysqli_query($con,$q);

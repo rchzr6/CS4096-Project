@@ -20,16 +20,17 @@
 			$usr = $_SESSION['username'];
 			$q = "SELECT `id` FROM `member` WHERE `username` = '$usr'";
 			$res = mysqli_query($con,$q);
-			$id = mysqli_field_seek($res,0);
+			$id = mysqli_fetch_row($res)[0];
 			$q = "SELECT `name` FROM `staff` WHERE `id_num` = '$id'";
 			$res = mysqli_query($con,$q);
-			$aname = mysqli_field_seek($res,0);
+			$aname = mysqli_fetch_row($res)[0];
 			//echo $q.'<br>'.$aname;
 			$q = "SELECT `group_name` FROM `group` WHERE `user_name` = '$aname'";
+			//echo $q;
 			$res = mysqli_query($con,$q);
 			$sizeg = mysqli_num_rows($res);
 			if($sizeg > 0)
-				$group = mysqli_field_seek($res,0);
+				$group = mysqli_fetch_row($res)[0];
 			
 			if(empty($_POST['view']) && empty($_POST['filter']) && $tree == FALSE){
 				$q = "SELECT `wo_num`,`wo_submit_date`,`submitter_name`,`assigned_name`,`wo_short_description`, `due_date`,`start_date` FROM `work_orders` WHERE `assigned_name` = '$aname' AND `wo_status` = 'New' ORDER BY `due_date` ASC";
@@ -64,7 +65,7 @@
 				}
 			}
 			else{
-				if($_POST['view'] != 'me' && $_POST['view'] != 'group' && !empty($_POST['view']))
+				if($_POST['view'] != 'ME' && $_POST['view'] != 'group' && !empty($_POST['view']))
 					$group = $_POST['view'];
 				//sets the initial query up. below will add the conditional aspects
 				$q = "SELECT `wo_num`,`wo_submit_date`,`submitter_name`,`assigned_name`,`wo_short_description`, `due_date`, `start_date` FROM `work_orders`  ";
@@ -72,27 +73,42 @@
 				$view = $_POST['view'];
 				$filter = $_POST['filter'];
 				
+				
 				if($view != 'ALL' && $filter != 'ALL'){
-					if($view == 'me')
+					if($view == 'ME')
 						$q .= " WHERE `wo_status` = '$filter' AND `assigned_name` = '$aname'";
 					if($view == 'group' && $sizeg > 0)
 						$q .= " WHERE `wo_status` = '$filter' AND `assigned_group` = '$group'";
 					if($view == 'group' && $sizeg == 0)
 						echo '<b>You do not belong to a group. Showing all work orders.</b><br>';
-					if($view  != 'me' && $view != 'group' && !empty($_POST['view']))
+					if($view  != 'ME' && $view != 'group' && !empty($_POST['view']))
 						$q .= " WHERE `wo_status` = '$filter' AND `assigned_group` = '$view'";
 				}
 				else if($filter != 'ALL' && $view == 'ALL') {
 						$q .= "WHERE `wo_status` = '$filter'";
 				}
+				else if($filter == 'Closed'){
+					$q .= "WHERE (`wo_status = 'Closed' OR `wo_status` = 'Terminated`) ";
+					if($view != 'ALL'){
+						if($view == 'ME')
+							$q .= "AND `assigned_name` = '$aname'";
+						if($view == 'group' && $sizeg > 0)
+							$q .= "AND `assigned_group` = '$group'";
+						if($view == 'group' && $sizeg == 0)
+							echo '<b>You do not belong to a group. Showing all work orders.</b><br>';
+						if($view  != 'ME' && $view != 'group' && !empty($_POST['view']))
+							$q .= "AND `assigned_group` = '$view'";
+					}
+				}
+				
 				else if($filter == 'ALL'){
-					if($view == 'me')
+					if($view == 'ME')
 						$q .= " WHERE `assigned_name` = '$aname'";
-					if(($view == 'group' && $sizeg > 0) || ($view != 'me' && $view != 'ALL' && $view != 'all' && $sizeg >0))
+					if(($view == 'group' && $sizeg > 0) || ($view != 'ME' && $view != 'ALL' && $view != 'all' && $sizeg >0))
 						$q .= " WHERE `assigned_group` = '$group'";
 					if($view == 'group' && $sizeg == 0)
 						echo '<b>You do not belong to a group. Showing all work orders.</b><br>';
-					//if($view  != 'me' && $view != 'group' && !empty($_POST['view']))
+					//if($view  != 'ME' && $view != 'group' && !empty($_POST['view']))
 						//$q .= " WHERE `assigned_group` = '$view'";
 					//if($view == 'ALL')
 						//DO NOTHING
@@ -111,7 +127,7 @@
 				}
 				
 				$res = mysqli_query($con,$q);
-				// echo $q;
+				//echo $q;
 				// echo $filter;
 				// echo $view;
 				$size = mysqli_num_rows($res);

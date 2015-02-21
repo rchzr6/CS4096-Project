@@ -38,6 +38,8 @@ include '../includes/connection.php';//File to get the connection to the databas
 	if(isset($_POST['Yes'])){
 		$aname = $_SESSION['subname'];
 		include '../includes/queries/create_wo_queries.php';
+						$_SESSION['go'] = TRUE;
+
 			header( 'Location: ../pages/create_wo_two.php?modify='.$modify.'&status='.$status.'&wonum='.$newnum.'&jump=true' );
 
 	}

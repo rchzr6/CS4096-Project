@@ -31,6 +31,7 @@
 	$long = $resar['wo_long_description'];
 	$start = $resar['wo_submit_date'];
 	$end = $resar['wo_complete_date'];
+	$ddate = $resar['due_date'];
 	$files = $resar['wo_file_list'];
 	$assigned = $resar['assigned_name'];
 	$group = $resar['assigned_group'];
@@ -48,6 +49,10 @@
 	Echo '<b>Attached Files: </b><a href="../files/'.$files.'">',$files,'</a><br>';
 	Echo '<b>Short Description: </b>',$short,'<br><br><br>';
 	Echo '<b>Full Description: </b>',$long,'<br><br><br>';
+	Echo '<b>Start Date: </b>',$start,'<br>';
+	Echo '<b>Due Date: </b>',$ddate,'<br>';
+	Echo '<b>Work Order Complete Date: </b>',$end,'<br><br><br>';
+
 	Echo '***********  Transaction List follows  **************<br><br>';
 	
 	if(!empty($wonum)){//selects comments from the transaction table and prints them.
@@ -55,11 +60,12 @@
 	//echo $size;
 	if ($size > 0) {
 		while($size > 0){
-			$row = mysqli_fetch_row($res);
-			echo "<b>Comments</b>: ".$row[3]."<br>";
-			//echo "<b>Status</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Submitter</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Time Stamp</b><br>";
-			echo "<b>Status</b>: ".$row[0]."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Posted By</b>: ".$row[1]."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><b>Time Stamp</b>: ".$row[2];
+			$row = $res->fetch_assoc();
+			echo "<b>Comments</b>: ".$row['comments']."<br>";
+			echo "<b>Status</b>: ".$row['wo_status']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Posted By</b>: ".$row['transaction_by']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><b>Time Stamp</b>: ".$row['Date/Time']."<br>";
+			echo "<b>Hours Logged</b>: ".$row['hours_logged_now']."<br>";
 			echo "<hr>";
+			--$size;
 			$size = $size -1;
 		}
 	}

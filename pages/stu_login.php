@@ -61,6 +61,11 @@ if(isset($_POST['go'])){
  <div class="container_12">
 	<br>
 	
+	<H2>Student access:<p>
+	
+	This system does not use the campus SSO logon system.  First time users must create an account using the "create account" link below.
+	</h2><br>
+	<p>
 <form id="login" method="post" action="#" style="float:center;">
 
     <b><label for="u_name">MST Email:</label></b>

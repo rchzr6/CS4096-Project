@@ -18,10 +18,11 @@ if(isset($_POST['wo_progress'])){
 }
 	if(!empty($aname))//IF A USER IS LOGGED IN, SET NAME TO THAT PERSON'S NAME
 		$name = $aname;
-	$q = "SELECT COUNT('transaction_num') FROM `transaction` ORDER BY `transaction_num` ASC";//GETS THE NUMBER OF TRANSACTIONS
+	$q = "SELECT MAX(transaction_num) FROM `transaction` ORDER BY `transaction_num` ASC";//GETS THE NUMBER OF TRANSACTIONS
+	//echo $q;
 	$countres = mysqli_query($con,$q);
 	$transnum = mysqli_fetch_row($countres)[0];
-	$transnum++;//INCREMENTS TRANSACTION NUMBER, USED TO GET THE NUMBER OF THE NEW TRANSACTION
+	$transnum = $transnum + 1;//INCREMENTS TRANSACTION NUMBER, USED TO GET THE NUMBER OF THE NEW TRANSACTION
 	$comments = str_replace("'",'',$comments);
 	$q = "UPDATE `work_orders` SET `wo_status`= '$status' WHERE `wo_num` = '$wonum'";
 	mysqli_query($con,$q);
@@ -31,16 +32,17 @@ if(isset($_POST['wo_progress'])){
 		$res = mysqli_query($con,$q);
 		$hoursa = $row = $res->fetch_row();
 		$hours = $hoursa[0];
-		$hours += $_POST['hours'];
 		$hnow = $_POST['hours'];
+		$hours = $hours + $_POST['hours'];
 		$q = "INSERT INTO transaction(transaction_num,wo_num,wo_status,transaction_by,comments,hours_logged,hours_logged_now) VALUES ($transnum,$wonum,'$status','$name','$comments','$hours','$hnow')";
+		//echo $q;
 	}
-	if($status == 'Closed'){
+	else if($status == 'Done'){
 		$cdate = date('Y-m-d H-m-s');
 		$q = "UPDATE `work_orders` SET `wo_status`= 'Closed', `wo_complete_date` = '$cdate' WHERE `wo_num` = '$wonum'";
 		mysqli_query($con,$q);
 		//echo '<script>window.open("test.php?q=$q")</script>';
-	$q = "INSERT INTO transaction(transaction_num,wo_num,wo_status,transaction_by,comments) VALUES ($transnum,$wonum,'$status','$name','$comments')";//CREATES QUERY TO CREATE TRANSACTION
+		$q = "INSERT INTO transaction(transaction_num,wo_num,wo_status,transaction_by,comments) VALUES ($transnum,$wonum,'$status','$name','$comments')";//CREATES QUERY TO CREATE TRANSACTION
 	if(isset($_POST['hours'])){//CHECKS IF THE HOURS WILL BE UPDATED AND CHANGES THE QUERY ACCORDINGLY
 		$q = "SELECT `hours_logged`,`transaction_num` FROM `transaction` WHERE `wo_num` = '$wonum' ORDER BY `transaction_num` DESC";
 		$res = mysqli_query($con,$q);
@@ -50,6 +52,7 @@ if(isset($_POST['wo_progress'])){
 		$hnow = $_POST['hours'];
 		$q = "INSERT INTO transaction(transaction_num,wo_num,wo_status,transaction_by,comments,hours_logged,hours_logged_now) VALUES ($transnum,$wonum,'$status','$name','$comments','$hours','$hnow')";
 	}
+	include '../includes/emails/send_mgr_wo_done.php';
 	}
 }
 	mysqli_query($con,$q);//PROCESSES THE QUERY

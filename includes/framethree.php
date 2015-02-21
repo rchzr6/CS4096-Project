@@ -17,12 +17,12 @@
 			echo '<option value="Waiting On Cost">Waiting on Cost</option>';
 			echo '<option value="Waiting On Parts">Waiting on Parts</option>';
 			echo '<option value="Done">Done</option>';
-			echo '<option value="Closed">Closed</option>';
+			//echo '<option value="Closed">Closed</option>';
 			echo '<option value="Assigned">Assigned</option>';
 		echo '</select>';
 		echo '</div>';
 		echo '<div id="f3hours" style="float:right; width:50%;">';
-		echo 'Current Hours Logged: '.$hours.'<br>';
+		echo 'Total Hours Logged: '.$hours.'<br>';
 		echo 'Hours To Add:<br> <input type="text" name="hours"/>';
 		echo '</div>';
 

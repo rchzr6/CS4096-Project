@@ -24,13 +24,13 @@
 		<?php
 		if(!isset($_GET['log'])){
 			
-					$root = "https://" . $_SERVER['HTTP_HOST'];		
+					$root = "http://" . $_SERVER['HTTP_HOST'];		
 					echo 'Please log in with one of the selections below<P><P>';
 				
-					echo '<form action="'.$root.'/mae_shop/pages/login.php">';
+					echo '<form action="'.$root.'/cs4096/pages/login.php">';
 					echo '<input type="submit" name="stafflogin" value="Faculty / Staff Login">';
 					echo '</form>';
-					echo '<form action="'.$root.'/mae_shop/pages/stu_login.php">';
+					echo '<form action="'.$root.'/cs4096/pages/stu_login.php">';
 					echo '<input type="submit" name="student" value="Student Access">';
 					echo '</form>';
 					

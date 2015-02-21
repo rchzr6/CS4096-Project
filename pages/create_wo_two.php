@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if($_SESSION['go'] != TRUE)
+	header( 'Location: ../index.php' );
+else
+	$_SESSION['go'] = FALSE;
 //This is the second page in the work order creation process.
 //It handles getting the descriptions of the work order and getting the appropriate files
 include '../includes/connection.php';
@@ -18,13 +22,14 @@ if(isset($_POST['submit'])){
 include '../includes/fileuploads.php';
 
 		//GETS THE FILE NAME AND DESCRIPTIONS
-		$fname = $_FILES['fileToUpload']['name']; 
-		$shortd = $_POST['shortdesc'];
-		$longd = $_POST['fulldesc'];
+		//$fname = $_FILES['fileToUpload']['name']; 
+		$fname = $fileName;
+		$shortd  = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST['shortdesc']))))));
+		$longd  = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($_POST['fulldesc']))))));
 		$duedate = $_POST['date1'];
 		//echo $duedate.'<br>';
 		//include '../includes/queries/create_wo_last.php'; // FOR SOME REASON THE FILE WONT INCLUDE RIGHT SO THE CODE IS DIRECTLY BELOW
-		if(!empty($fname))
+		if($uploadOk == 0)
 			$file = $fname;
 		else
 			$file = 'NO_FILES.php';
@@ -116,8 +121,8 @@ else
 	  $myCalendar->writeScript();
 	  ?>
 <br><br>
-<b>Short Description:</b> <textarea maxlength="250" name="shortdesc" form="createwotwo" style="float:right;" cols="70" rows="4">Short Description</textarea><br><br><br><br><br>
-<b>Full Description of Work:</b> <textarea name="fulldesc" form="createwotwo" style="float:right; " rows="20" cols="70">Full Description</textarea><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<b>Short Description:</b> <textarea maxlength="250" name="shortdesc" form="createwotwo" style="float:right;" cols="70" rows="4" required>Short Description</textarea><br><br><br><br><br>
+<b>Full Description of Work:</b> <textarea name="fulldesc" form="createwotwo" style="float:right; " rows="20" cols="70" required>Full Description</textarea><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <b>Upload File: </b>
 	<p><b><i>NOTE: Our system will only handle file names with no spaces. Please replace all spaces with underscores.<br>In addition, if you have multiple files, please upload all your files in one zip file.</i></b></p>
         <input type="hidden" name="MAX_FILE_SIZE" value="3500000">

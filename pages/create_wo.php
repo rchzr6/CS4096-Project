@@ -51,8 +51,10 @@
 			$scope = $_POST['scope'];
 			if(!empty($_POST['otherscope']))	//checks if otherscope is set, if yes, replaces the scope with otherscope
 				$scope = $_POST['otherscope'];
-			if(!empty($email))
+			if(!empty($email)){
+				$_SESSION['go'] = TRUE;
 				include '../includes/queries/create_wo_queries.php';//CALLS THE NEXT SET OF QUERIES TO CONTINUE CREATION OF WORK ORDER
+			}
 			else{
 				echo '<b>Email is required to continue</b>';//PRINTS ERROR 
 				$_POST['Continue'] = 'Continue';//SETS VARIABLE SO USER DOES NOT NEED TO START OVER ON THE PAGE WITH CAPTCHA
@@ -76,14 +78,14 @@
 		
 	</select>
 	<br>
-	Submitter Email (MUST BE MST EMAIL): <input type="text" name="idnum" value="<?php echo $unencyid; ?>"></input><br>
-	Submitter Name: <input type="text" name="subname" value="<?php echo $subname; ?>" ></input><br>
+	Submitter Email (MUST BE MST EMAIL): <input type="text" name="idnum" value="<?php echo $unencyid; ?>"required></input><br>
+	Submitter Name: <input type="text" name="subname" value="<?php echo $subname; ?>" required></input><br>
 	<?php
 	if(isset($_POST['Continue'])){
 	//form to get the basic info of the user
 		echo 'Submitter Office Number: <input type="text" name="officenum" value='.$officenum.' ></input><br>';
-		echo 'Submitter Phone Number: <input type="text" name="phonenum" value='.$phone.' ></input><br>';
-		echo 'Submitter Preferred E-Mail Address: <input type="text" name="email" value='.$email.' ><br>';
+		echo 'Submitter Phone Number: <input type="text" name="phonenum" value='.$phone.'></input><br>';
+		echo 'Submitter Preferred E-Mail Address: <input type="text" name="email" value='.$email.' required><br>';
 	
 		echo 'Work Type:';
 		echo '<select form="create_wo" name="worktype" >';

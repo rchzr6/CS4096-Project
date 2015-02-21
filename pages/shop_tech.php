@@ -39,7 +39,7 @@ if(empty($myname))//Checks if myname is empty and initializes it if it is not
 
 <body>
 	<?php include '../includes/menu.php'; ?><!----Includes the basic menu file--->
-	<u><h1>Staff Workorder Update</h1></u>
+	<u><h3>Staff Workorder Update</h3></u>
 	<div id="myResults"></div>
 	<!----Form to get information about the user and work order---->
 	<div id="frame" style="width:100%;">

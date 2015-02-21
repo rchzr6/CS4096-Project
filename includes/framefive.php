@@ -1,7 +1,7 @@
 
 <?php
 //THIS IS FRAME 5. USED TO DISPLAY THE AVAILABLE WORK ORDERS FOR USER TO SELECT FROM, QUERIES ARE RUN ON A DIFFERENT PAGE, THIS PAGE ONLY USES THE RESULTS
-		echo '<div id="framefive" style="border-style: solid; border-width: small; height: 500px;overflow: scroll;">';
+		echo '<div id="framefive" style="border-style: solid; border-width: small; height: 400px;overflow: scroll;">';
 				if(!empty($_POST['tree'])){
 				if($_POST['organize'] == 'tree'){
 					$tree = TRUE;
@@ -15,12 +15,12 @@
 					$size = mysqli_num_rows($wo_to_display);
 					//echo '<br><br><br>Note: Red color = over due, Green = On/Ahead of Schedule. Work orders are listed in order of due date.<br>';
 					echo '<table style="width:100%;">';
-					echo '<tr><th>WO#</th><th>Sub Date</th><th>Short Description</th><th>Due Date</th><th>Start Date</th></tr>';
+					echo '<tr><th>WO#</th><th>Status</th><th>Short Description</th><th>Due Date</th><th>Start Date</th></tr>';
 					while($size > 0){
 						$row = mysqli_fetch_row($wo_to_display);
-						$idate = strtotime($row[1]);
-						$date = date('Y-m-d',$idate);
-						echo '<tr><td style=" width:15px;"><center><a  href="?wonum='.$row[0].'">'.$row[0].'</a></center></td><td style=" width:55px;"><center>'.$date.'</center></td><td style=" width:650px;">&nbsp;&nbsp;'.$row[2].'</td>';
+						// $idate = strtotime($row[1]);
+						// $date = date('Y-m-d',$idate);
+						echo '<tr><td style=" width:15px;"><center><a  href="?wonum='.$row[0].'">'.$row[0].'</a></center></td><td style=" width:55px;"><center>'.$row[1].'</center></td><td style=" width:650px;">&nbsp;&nbsp;'.$row[2].'</td>';
 						if($row[3] < Date('Y-m-d'))
 							echo '<td style="color: red; align: center;"><center>'.$row[3].'</center></td>';
 						else if($row[3] == Date('Y-m-d'))

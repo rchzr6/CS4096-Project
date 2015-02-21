@@ -20,7 +20,7 @@
 				$row = mysqli_fetch_row($res);
 				echo "<b>Comments</b>: ".$row[3]."<br>";
 				echo "<b>Status</b>: ".$row[0]."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Posted by</b>: ".$row[1]."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<br><b>Time Stamp</b>: ".$row[2]; 
-				echo "<br><b>Total Hours Logged</b>: ".$row[4]."<br>";
+				echo "<br><b>Hours Logged</b>: ".$row[4]."<br>";
 			
 			echo "<hr>";
 				--$size;

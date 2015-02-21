@@ -16,7 +16,7 @@ else{
 }
 
 //Subject
-$subject =  'DO NOT REPLY: ADVISOR: New MAEM workorder submitted ';
+$subject =  'DO NOT REPLY: ADVISOR: New MAEM workorder submitted with you as ADVISOR ';
 $subject .= $wonum;
 $docRoot= "https://" . $_SERVER['HTTP_HOST'];
 
